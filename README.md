@@ -15,3 +15,4 @@ Bu depo, **BSM3517 Bilimsel Hesaplama Yöntemleri** dersinde işlenen temel mate
 9. **`np_dizi.py`**: `range(1, 11)` ile NumPy dizisi oluşturma; döngüyle ve vektörel (`dizi ** 2`) kare alma karşılaştırması.
 10. **`numpy_dizi_reshape_ve_carpma.py`**: 12 elemanlı vektörü `reshape(3, 4)` ile matrise dönüştürme ve skaler 3 ile çarpma.
 11. **`ozel_ucgenler_hipotenus.py`**: `[3, 4, 5, 12, 6, 8, 7, 24]` listesindeki ikili kenar çiftlerini ayırıp hipotenüslerini hesaplama.
+12. **`sabit_ivmeli_hareket_t20.py`**: 5. Hafta 15. uygulama; $x(t) = v_0 t + \frac{1}{2} a t^2$ formülü ile $0-20$ saniye arası ($t=20$ saniye) vektörel konum hesabı.
