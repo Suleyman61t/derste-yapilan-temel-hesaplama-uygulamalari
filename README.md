@@ -16,3 +16,4 @@ Bu depo, **BSM3517 Bilimsel Hesaplama Yöntemleri** dersinde işlenen temel mate
 10. **`numpy_dizi_reshape_ve_carpma.py`**: 12 elemanlı vektörü `reshape(3, 4)` ile matrise dönüştürme ve skaler 3 ile çarpma.
 11. **`ozel_ucgenler_hipotenus.py`**: `[3, 4, 5, 12, 6, 8, 7, 24]` listesindeki ikili kenar çiftlerini ayırıp hipotenüslerini hesaplama.
 12. **`sabit_ivmeli_hareket_t10.py`**: 5. Hafta 15. uygulama; $x(t) = v_0 t + \frac{1}{2} a t^2$ formülü ile $t=10$ saniyeye kadar ($0.5$ sn adımlarla) her zaman anındaki konumun ($x$) yazdırılması.
+13. **`matris_10x10_ilk_son_satir_carpimi.py`**: 100 elemanlı diziyi `reshape(10, 10)` ile matrise çevirip ilk satır (`matris[0]`) ile son satırın (`matris[-1]`) eleman bazlı çarpılması.
