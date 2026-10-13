@@ -1,10 +1,10 @@
-# Soru: 100 rastgele tam sayıdan 10x10 matris oluşturup ilk ve son satırını çarpınız; matrisin en büyük, en küçük ve standart sapma değerlerini bulunuz.
-# Burada np.random.randint(1, 1000, 100) ile 100 rastgele sayı üretip reshape(10, 10) yaptık, satırları çarptık ve max(), min(), std() hesapladık.
+# Soru: 100 rastgele tam sayıdan (en fazla 350) 10x10 matris oluşturup ilk ve son satırını çarpınız; matrisin en büyük, en küçük ve standart sapma değerlerini bulunuz.
+# Burada np.random.randint(1, 351, 100) ile maksimum 350 olacak şekilde sayılar üretip işlemleri yaptık.
 
 import numpy as np
 
-# 100 rastgele sayıdan 10x10 matris (1 ile 1000 arası rastgele tam sayılar)
-dizi = np.random.randint(1, 1000, 100)
+# 100 rastgele sayıdan 10x10 matris (1 ile 350 arası, 350 dahil)
+dizi = np.random.randint(1, 351, 100)
 matris = dizi.reshape(10, 10)
 
 ilk_satir = matris[0]
