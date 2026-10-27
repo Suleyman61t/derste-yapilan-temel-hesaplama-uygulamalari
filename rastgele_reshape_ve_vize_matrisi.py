@@ -1,5 +1,5 @@
-# Soru: 1) Rastgele bir dizi oluşturup reshape ile farklı boyutta matrise dönüştürünüz. 2) 70 üzeri notlardan oluşan bir vize matrisi tanımlayıp genel ortalamasını hesaplayınız.
-# Burada np.random ile üretilen diziyi reshape ettik ve 70 üzeri değerler içeren vize matrisinin np.mean() ile ortalamasını aldık.
+# Soru: 1) Rastgele bir dizi oluşturup reshape ile matrise dönüştürünüz. 2) 70 üzeri notlardan oluşan vize matrisinin ortalamasını alınız. 3) Matrisi float tipine dönüştürünüz ve flatten ile tek boyuta düzleştiriniz.
+# Burada reshape, np.mean(), .astype(float) ve .flatten() fonksiyonlarını uyguladık.
 
 import numpy as np
 
@@ -22,3 +22,11 @@ genel_ortalama = np.mean(vize_notlari)
 print("\n" + "=" * 40)
 print("Uygulama 2 - Vize Notları Matrisi:\n", vize_notlari)
 print(f"\nVize Notları Genel Ortalaması: {genel_ortalama:.2f}")
+
+# Uygulama 3: Float tipi dönüşümü ve Flatten (düzleştirme)
+vize_float = vize_notlari.astype(float)
+vize_duzlestirilmis = vize_notlari.flatten()
+
+print("\n" + "=" * 40)
+print("Uygulama 3 - Float Tipine Dönüştürülmüş Matris:\n", vize_float)
+print("\nUygulama 3 - Flatten ile Tek Boyuta Düzleştirilmiş Dizi:\n", vize_duzlestirilmis)
