@@ -17,3 +17,4 @@ Bu depo, **BSM3517 Bilimsel Hesaplama Yöntemleri** dersinde işlenen temel mate
 11. **`ozel_ucgenler_hipotenus.py`**: `[3, 4, 5, 12, 6, 8, 7, 24]` listesindeki ikili kenar çiftlerini ayırıp hipotenüslerini hesaplama.
 12. **`sabit_ivmeli_hareket_t10.py`**: 5. Hafta 15. uygulama; $x(t) = v_0 t + \frac{1}{2} a t^2$ formülü ile $t=10$ saniyeye kadar ($0.5$ sn adımlarla) her zaman anındaki konumun ($x$) yazdırılması.
 13. **`matris_10x10_ilk_son_satir_carpimi.py`**: 100 rastgele sayıdan (`np.random.randint`) 10x10 matris oluşturma; ilk ve son satırın eleman bazlı çarpımı, çarpım toplamı (`.sum()`), matrisin en büyük (`.max()`), en küçük (`.min()`) ve standart sapma (`.std()`) hesaplamaları.
+14. **`rastgele_reshape_ve_vize_matrisi.py`**: 12 rastgele sayıyı `reshape(3, 4)` ile matrise çevirme; 70 üzeri değerlerden oluşan vize notları matrisi tanımlayıp `np.mean()` ile genel ortalama hesaplama.
