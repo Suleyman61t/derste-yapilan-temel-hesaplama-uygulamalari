@@ -176,9 +176,10 @@ print(not_tablosu.iloc[2:5, 2])
 
 
 # ==============================================================================
-# ÖRNEK 6: PANDAS İLE DOSYADAN VERİ OKUMA (CSV / EXCEL) - SAYFA 4-7
+# ÖRNEK 6: PANDAS İLE DOSYADAN VERİ OKUMA VE PARAMETRELER - SAYFA 4 & 5
 # ==============================================================================
-# Soru: DYS'deki 'mobile phone rating by dxo' dosyasını Pandas ile okuyup inceleyiniz.
+# Soru: DYS'deki 'mobile phone rating by dxo.csv' dosyasını Pandas ile okuyunuz.
+# Farklı parametrelerle (delimiter, usecols vb.) kullanımını gösteriniz.
 
 print("\n" + "=" * 60)
 print("ÖRNEK 6: PANDAS İLE DOSYADAN VERİ OKUMA (CSV VE EXCEL)")
@@ -186,20 +187,82 @@ print("=" * 60)
 
 import os
 
-# 6.1. CSV Dosyasından Okuma (Slayttaki doğrudan yöntem)
+# 6.1. Standart Okuma (Slayt Sayfa 4)
 csv_yolu = os.path.join(os.path.dirname(__file__), "mobile phone rating by dxo.csv")
 phone = pd.read_csv(csv_yolu)
-print("6.1. CSV Dosyası Başarıyla Okundu (İlk 5 Satır):\n", phone.head(5))
+print("6.1. phone = pd.read_csv(...) Başarıyla Okundu (İlk 5 Satır):\n", phone.head(5))
 
-# 6.2. Excel (.xlsx) Dosyasından Okuma (read_excel yöntemi)
+# 6.2. İkinci Yöntem: Farklı Parametrelerle Okuma (Slayt Sayfa 4)
+df_ozel = pd.read_csv(
+    csv_yolu,
+    delimiter=',',
+    usecols=["model", "price"]
+)
+print("\n6.2. Özel Parametrelerle (usecols=['model', 'price']) Okunan Veri:\n", df_ozel.head(5))
+
+# 6.3. Excel (.xlsx) Formatından Okuma (pd.read_excel)
 excel_yolu = os.path.join(os.path.dirname(__file__), "mobile phone rating by dxo.xlsx")
 phone_excel = pd.read_excel(excel_yolu)
-print("\n6.2. Excel Dosyası Başarıyla Okundu (İlk 3 Satır):\n", phone_excel.head(3))
+print("\n6.3. Excel'den (pd.read_excel) Okunan Veri (İlk 3 Satır):\n", phone_excel.head(3))
 
 print("\nVeri Seti Özeti:")
 print(f"Toplam Satır/Sütun: {phone.shape}")
 print(f"Sütun İsimleri: {list(phone.columns)}")
 
+
+# ==============================================================================
+# ÖRNEK 7: TELEFON VERİ SETİNDE VERİ SEÇİMİ (VALUES, LOC, ILOC) - SAYFA 5, 6 & 7
+# ==============================================================================
+# Soru: phone veri seti üzerinde sütun seçimi, values, loc (etiket/şart) ve
+# iloc (pozisyon) fonksiyonlarının slayttaki tüm kullanımlarını gösteriniz.
+
 print("\n" + "=" * 60)
-print("HAFTA 11 TÜM UYGULAMALARI BAŞARIYLA ÇALIŞTIRILDI!")
+print("ÖRNEK 7: TELEFON VERİ SETİNDE SEÇİM VE FİLTRELEME (VALUES, LOC, ILOC)")
+print("=" * 60)
+
+# 7.1. Sütun Seçimi (Slayt Sayfa 4 & 5)
+print("7.1. phone.price ile Sütun Seçimi (İlk 5):\n", phone.price.head(5))
+print("\nphone['model'] ile Sütun Seçimi (İlk 5):\n", phone["model"].head(5))
+
+# 7.2. values Özelliği ile Veriye Erişim (Slayt Sayfa 6)
+print("\n7.2. phone.values[0] (İlk Satırın Değerleri - NumPy Array):\n", phone.values[0])
+
+# 7.3. LOC ile Etiket ve Mantıksal Koşul Bazlı Seçimler (Slayt Sayfa 6)
+print("\n--- LOC (Etiket ve Şart Bazlı Seçim) ---")
+
+# a) Belirli satıra kadar ve price sütunu
+print("a) phone.loc[:2, 'price'] (0-2. Satırlar Arası Fiyat):\n", phone.loc[:2, 'price'])
+
+# b) Belirli satır aralığı
+print("\nb) phone.loc[2:7, 'price'] (2-7. Satırlar Arası Fiyat):\n", phone.loc[2:7, 'price'])
+
+# c) Belirli bir sütuna kadar tüm veriler
+print("\nc) phone.loc[:3, :'price'] (price Sütununa Kadar Olan Veriler):\n", phone.loc[:3, :'price'])
+
+# d) Koşula göre filtreleme: Piyasaya çıkış tarihi 'Jul 2021' olanlar
+print("\nd) phone.loc[phone.launch == 'Jul 2021'] (Jul 2021 Çıkışlı Modeller):")
+print(phone.loc[phone.launch == "Jul 2021"][['model', 'price', 'launch']])
+
+# e) Çift Koşul: Piyasaya çıkış tarihi 'Jul 2021' VE Camera Rating >= 120
+print("\ne) phone.loc[(phone.launch == 'Jul 2021') & (phone.camera >= 120)] (Jul 2021 & Kamera >= 120):")
+print(phone.loc[(phone.launch == "Jul 2021") & (phone.camera >= 120)][['model', 'price', 'camera']])
+
+# f) Çıkış tarihi 'Jul 2021' olanların sadece Camera sütununu DataFrame olarak alma
+print("\nf) phone.loc[phone.launch == 'Jul 2021', ['camera']]:")
+print(phone.loc[phone.launch == "Jul 2021", ["camera"]])
+
+# 7.4. ILOC ile Pozisyon ve Tamsayı İndeks Bazlı Seçimler (Slayt Sayfa 6 & 7)
+print("\n--- ILOC (Pozisyon / Tamsayı İndeksi Bazlı Seçim) ---")
+
+# a) 1. kolon ve 2. satıra kadar olanlar (:2, 1)
+print("a) phone.iloc[:2, 1] (0-1. satır, 1. kolon -> price):\n", phone.iloc[:2, 1])
+
+# b) 1. kolon ve 2. satır ile 7. satır arasındakiler (2:7, 1)
+print("\nb) phone.iloc[2:7, 1] (2-6. satırlar, 1. kolon -> price):\n", phone.iloc[2:7, 1])
+
+# c) 3. kolona kadar olan tüm veriler (launch dahil) (:, :3)
+print("\nc) phone.iloc[:5, :3] (İlk 5 Satır, 3. Kolona Kadar - launch dahil):\n", phone.iloc[:5, :3])
+
+print("\n" + "=" * 60)
+print("HAFTA 11 TÜM UYGULAMALARI EKSİKSİZ TAMAMLANDI!")
 print("=" * 60)
