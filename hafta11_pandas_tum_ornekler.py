@@ -105,16 +105,43 @@ print(f"Tablo Biçimi (shape)      : {df_urunler.shape}")
 # ==============================================================================
 # Soru: 50 kişilik bir öğrenci grubunun vize (25-85), ödev (50-100) ve final (30-90)
 # notlarının yer aldığı float tipinde (2 ondalık basamaklı) DataFrame tablosunu oluşturunuz.
-# Not dizilerini tek bir matriste (np.array().T) birleştirip DataFrame'e dönüştürünüz.
-# İndeksler 'ogrenci 1', 'ogrenci 2', ..., 'ogrenci 50' olmalıdır.
+# İndeksler 'Öğrenci 1', 'Öğrenci 2', ..., 'Öğrenci 50' olmalıdır.
+# Burada hem temel sözlük yöntemi hem de ortak matriste birleştirme (np.array().T) yöntemi yer almaktadır.
 
 print("\n" + "=" * 60)
-print("ÖRNEK 4: SLAYTTAKİ RESMİ ÖRNEK UYGULAMA (ORTAK MATRİS İLE 50 ÖĞRENCİ)")
+print("ÖRNEK 4: SLAYTTAKİ RESMİ ÖRNEK UYGULAMA (50 ÖĞRENCİ NOT TABLOSU)")
 print("=" * 60)
 
 np.random.seed(42)  # Tekrarlanabilir rastgelelik için
 
+# ------------------------------------------------------------------------------
+# 4.1. Temel Kod (Sözlük / Doğrudan Seri Yöntemi)
+# ------------------------------------------------------------------------------
 # 50 öğrenci için belirlenen aralıklarda rastgele float notlar (2 basamak yuvarlama)
+vize = np.round(np.random.uniform(25, 85, 50), 2)
+odev = np.round(np.random.uniform(50, 100, 50), 2)
+final = np.round(np.random.uniform(30, 90, 50), 2)
+
+# Öğrenci 1'den 50'ye kadar indeks listesi
+ogrenci_indeksleri = [f"Öğrenci {i}" for i in range(1, 51)]
+
+# DataFrame oluşturma (Temel Sözlük Yöntemi)
+not_tablosu = pd.DataFrame({
+    'Vize': vize,
+    'Ödev': odev,
+    'Final': final
+}, index=ogrenci_indeksleri)
+
+print("4.1. Temel Not Tablosu (İlk 5 ve Son 5 Öğrenci):\n", not_tablosu.head(5))
+print("...\n", not_tablosu.tail(5))
+
+# İstatistiksel özet (mean, min, max, std)
+print("\nNotların İstatistiksel Özeti (Ortalama, Min, Max, Std):")
+print(not_tablosu.describe().loc[['mean', 'min', 'max', 'std']])
+
+# ------------------------------------------------------------------------------
+# 4.2. Ortak Matriste Birleştirme Yöntemi (np.array().T ile Transpoz)
+# ------------------------------------------------------------------------------
 notlar_vize = np.random.uniform(25, 86, size=50).round(2)
 notlar_odev = np.random.uniform(50, 101, size=50).round(2)
 notlar_final = np.random.uniform(30, 91, size=50).round(2)
@@ -122,22 +149,14 @@ notlar_final = np.random.uniform(30, 91, size=50).round(2)
 # Vize, Ödev ve Final dizilerini 2B ortak matriste birleştirme (.T ile transpoz)
 notlar = np.array([notlar_vize, notlar_odev, notlar_final]).T
 
-# DataFrame oluşturma (Dersteki Colab kodunun birebir aynısı)
+# Ortak matris ile DataFrame oluşturma
 notlar_df_1 = pd.DataFrame(
     notlar,
     columns=["Vize", "Odev", "Final"],
     index=["ogrenci " + str(i) for i in range(1, 51)]
 )
 
-# Geriye dönük uyumluluk için referans
-not_tablosu = notlar_df_1
-
-print("Not Tablosu (İlk 5 ve Son 5 Öğrenci):\n", notlar_df_1.head(5))
-print("...\n", notlar_df_1.tail(5))
-
-# İstatistiksel özet (mean, min, max, std)
-print("\nNotların İstatistiksel Özeti (Ortalama, Min, Max, Std):")
-print(notlar_df_1.describe().loc[['mean', 'min', 'max', 'std']])
+print("\n4.2. Ortak Matris (np.array().T) ile Üretilen Tablo (İlk 5 Öğrenci):\n", notlar_df_1.head(5))
 
 
 # ==============================================================================
@@ -151,28 +170,28 @@ print("ÖRNEK 5: VERİ SEÇİMİ (.loc VE .iloc İLE DİLİMLEME)")
 print("=" * 60)
 
 # Sütun seçimi
-print("Sadece Final Sütunu (İlk 3 Eleman):\n", notlar_df_1['Final'].head(3))
+print("Sadece Final Sütunu (İlk 3 Eleman):\n", not_tablosu['Final'].head(3))
 
 # loc (Etiket / İsim bazlı seçim)
 print("\n--- LOC (Etiket Bazlı Seçim) ---")
-print("1) 'ogrenci 1'den 'ogrenci 3'e kadar 'Vize' ve 'Final' sütunları:")
-print(notlar_df_1.loc['ogrenci 1':'ogrenci 3', ['Vize', 'Final']])
+print("1) 'Öğrenci 1'den 'Öğrenci 3'e kadar 'Vize' ve 'Final' sütunları:")
+print(not_tablosu.loc['Öğrenci 1':'Öğrenci 3', ['Vize', 'Final']])
 
 print("\n2) Final notu 80'in üzerinde olan başarılı öğrenciler (Filtreleme):")
-basarili_final = notlar_df_1.loc[notlar_df_1['Final'] >= 80]
+basarili_final = not_tablosu.loc[not_tablosu['Final'] >= 80]
 print(basarili_final.head(4))
 
 print("\n3) Vizesi 70 üstü VE Finali 80 üstü olan öğrenciler (Çift Koşul - &):")
-cift_kosul = notlar_df_1.loc[(notlar_df_1['Vize'] >= 70) & (notlar_df_1['Final'] >= 80)]
+cift_kosul = not_tablosu.loc[(not_tablosu['Vize'] >= 70) & (not_tablosu['Final'] >= 80)]
 print(cift_kosul)
 
 # iloc (Tamsayı / İndeks pozisyonu bazlı seçim)
 print("\n--- ILOC (Pozisyon Bazlı İndeksleme) ---")
 print("1) İlk 3 satır ve ilk 2 sütun (0:3, 0:2):")
-print(notlar_df_1.iloc[:3, :2])
+print(not_tablosu.iloc[:3, :2])
 
 print("\n2) 2. satırdan 5. satıra kadar (index 2:5) sadece Final sütunu (index 2):")
-print(notlar_df_1.iloc[2:5, 2])
+print(not_tablosu.iloc[2:5, 2])
 
 print("\n" + "=" * 60)
 print("HAFTA 11 TÜM UYGULAMALARI BAŞARIYLA ÇALIŞTIRILDI!")
