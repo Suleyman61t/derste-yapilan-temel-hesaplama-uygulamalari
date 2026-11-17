@@ -174,6 +174,32 @@ print(not_tablosu.iloc[:3, :2])
 print("\n2) 2. satırdan 5. satıra kadar (index 2:5) sadece Final sütunu (index 2):")
 print(not_tablosu.iloc[2:5, 2])
 
+
+# ==============================================================================
+# ÖRNEK 6: PANDAS İLE DOSYADAN VERİ OKUMA (CSV / EXCEL) - SAYFA 4-7
+# ==============================================================================
+# Soru: DYS'deki 'mobile phone rating by dxo' dosyasını Pandas ile okuyup inceleyiniz.
+
+print("\n" + "=" * 60)
+print("ÖRNEK 6: PANDAS İLE DOSYADAN VERİ OKUMA (CSV VE EXCEL)")
+print("=" * 60)
+
+import os
+
+# 6.1. CSV Dosyasından Okuma (Slayttaki doğrudan yöntem)
+csv_yolu = os.path.join(os.path.dirname(__file__), "mobile phone rating by dxo.csv")
+phone = pd.read_csv(csv_yolu)
+print("6.1. CSV Dosyası Başarıyla Okundu (İlk 5 Satır):\n", phone.head(5))
+
+# 6.2. Excel (.xlsx) Dosyasından Okuma (read_excel yöntemi)
+excel_yolu = os.path.join(os.path.dirname(__file__), "mobile phone rating by dxo.xlsx")
+phone_excel = pd.read_excel(excel_yolu)
+print("\n6.2. Excel Dosyası Başarıyla Okundu (İlk 3 Satır):\n", phone_excel.head(3))
+
+print("\nVeri Seti Özeti:")
+print(f"Toplam Satır/Sütun: {phone.shape}")
+print(f"Sütun İsimleri: {list(phone.columns)}")
+
 print("\n" + "=" * 60)
 print("HAFTA 11 TÜM UYGULAMALARI BAŞARIYLA ÇALIŞTIRILDI!")
 print("=" * 60)
